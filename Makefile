@@ -1,5 +1,5 @@
 Money:main.cpp database.o datadeal.o
-	g++ main.cpp database.o datadeal.o -o Money -lsqlite3 -g
+	g++ main.cpp database.o datadeal.o -o money -lsqlite3
 	rm *.o
 
 database:database.cpp

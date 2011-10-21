@@ -145,12 +145,12 @@ float Income::Sum(const string & sql)
 	if (!data.runSQL(sql, res))
 	{
 		errMsg = data.getErrorMessage();
-		return -10000000; //返回负一亿，表示错误
+		return 0; //返回0，表示错误
 	}
 	else if (res.row == 0 && res.col == 0)
 	{
 		errMsg = "There isn't any data";
-		return -10000000;
+		return -0;
 	}
 	float sum = 0.0;
 	for (int i = 1; i < res.row+1; i++)

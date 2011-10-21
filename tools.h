@@ -559,7 +559,7 @@ void outputCashFlow(void)
 		cout<<TypeName<<" = "<<IncomeData.getSumByType(str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
-	cout<<"总支出="<<TotalExpense*(-1)<<"元,其中"<<endl;
+	cout<<"总支出="<<fabs(TotalExpense)<<"元,其中"<<endl;
 	for (int i = 1; i < res.row+1; i++)
 	{
 		//取得类型名称
