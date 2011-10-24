@@ -627,7 +627,7 @@ void outputBalanceSheet(void)
 		cout<<TypeName<<" = "<<InvestmentData.getSumByType(str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
-	cout<<"总负债="<<TotalDebt*(-1)<<"元,其中"<<endl;
+	cout<<"总负债="<<fabs(TotalDebt)<<"元,其中"<<endl;
 	for (int i = 1; i < res.row+1; i++)
 	{
 		//取得类型名称
