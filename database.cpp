@@ -92,13 +92,6 @@ bool DataBase::createDataBase(void)
 		      Amount DECIMAL(7,2), \
 		      TypeID INTEGER,  \
 		      Remark NVARCHAR);";
-	/*
-	int rc = sqlite3_exec(db, sql.c_str(), 0, 0, &errMsg);
-	if (rc != 0)
-	{
-		return false;
-	}
-	*/
 	sqlite3_stmt * statement;
 	if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL) != SQLITE_OK)
 	{
@@ -117,13 +110,6 @@ bool DataBase::createDataBase(void)
 	sql = "CREATE TABLE IncomeType( \
 	       TypeID INTEGER PRIMARY KEY, \
 	       TypeName NVARCHAR);";
-	/*
-	rc = sqlite3_exec(db, sql.c_str(), 0, 0, &errMsg);
-	if (rc != 0)
-	{
-		return false;
-	}
-	*/
 	if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL) != SQLITE_OK)
 	{
 		errMsg = "插入收入支出分类表错误!";
@@ -145,13 +131,6 @@ bool DataBase::createDataBase(void)
 		      Amount DECIMAL(7,2), \
 		      TypeID INTEGER,  \
 		      Remark NVARCHAR);";
-	/*
-	rc = sqlite3_exec(db, sql.c_str(), 0, 0, &errMsg);
-	if (rc != 0)
-	{
-		return false;
-	}
-	*/
 	if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL) != SQLITE_OK)
 	{
 		errMsg = "插入资产负债表错误!";
@@ -169,13 +148,6 @@ bool DataBase::createDataBase(void)
 	sql = "CREATE TABLE InvestmentType( \
 	       TypeID INTEGER PRIMARY KEY, \
 	       TypeName NVARCHAR);";
-	/*
-	rc = sqlite3_exec(db, sql.c_str(), 0, 0, &errMsg);
-	if (rc != 0)
-	{
-		return false;
-	}
-	*/
 	if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL) != SQLITE_OK)
 	{
 		errMsg = "插入资产负债分类表错误!";
@@ -213,13 +185,6 @@ bool DataBase::modifyDataBase(const string & querySQL)
 	{
 		openDataBase();
 	}
-	/*
-	int rc = sqlite3_exec(db, querySQL.c_str(), 0, 0, &errMsg);
-	if (rc != 0)
-	{
-		return false;
-	}
-	*/
 	sqlite3_stmt * statement;
 	if (sqlite3_prepare_v2(db, querySQL.c_str(), -1, &statement, NULL) != SQLITE_OK)
 	{

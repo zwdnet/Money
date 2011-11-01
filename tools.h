@@ -551,12 +551,14 @@ void outputCashFlow(void)
 	{
 		//取得类型名称
 		string TypeName = IncomeData.getTypeName(str2int(res.result[i]));
-		if (TypeName == "NULL" || IncomeData.getSumByType(str2int(res.result[i])) < 0)
+		if (TypeName == "NULL" || IncomeData.getSumByType(beginTime,
+					endTime, str2int(res.result[i])) <= 0)
 		{
 			continue;
 		}
 		cout<<space;
-		cout<<TypeName<<" = "<<IncomeData.getSumByType(str2int(res.result[i]))<<endl;
+		cout<<TypeName<<" = "<<IncomeData.getSumByType(beginTime,
+				endTime, str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
 	cout<<"总支出="<<fabs(TotalExpense)<<"元,其中"<<endl;
@@ -564,12 +566,14 @@ void outputCashFlow(void)
 	{
 		//取得类型名称
 		string TypeName = IncomeData.getTypeName(str2int(res.result[i]));
-		if (TypeName == "NULL" || IncomeData.getSumByType(str2int(res.result[i])) > 0)
+		if (TypeName == "NULL" || IncomeData.getSumByType(beginTime,
+					endTime, str2int(res.result[i])) >= 0)
 		{
 			continue;
 		}
 		cout<<space;
-		cout<<TypeName<<" = "<<-IncomeData.getSumByType(str2int(res.result[i]))<<endl;
+		cout<<TypeName<<" = "<<-IncomeData.getSumByType(beginTime,
+				endTime, str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
 	cout<<"收入-支出="<<Total<<endl;
@@ -619,12 +623,14 @@ void outputBalanceSheet(void)
 	{
 		//取得类型名称
 		string TypeName = InvestmentData.getTypeName(str2int(res.result[i]));
-		if (TypeName == "NULL" || InvestmentData.getSumByType(str2int(res.result[i])) < 0)
+		if (TypeName == "NULL" || InvestmentData.getSumByType(beginTime,
+					 endTime, str2int(res.result[i])) <= 0)
 		{
 			continue;
 		}
 		cout<<space;
-		cout<<TypeName<<" = "<<InvestmentData.getSumByType(str2int(res.result[i]))<<endl;
+		cout<<TypeName<<" = "<<InvestmentData.getSumByType(beginTime,
+				endTime, str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
 	cout<<"总负债="<<fabs(TotalDebt)<<"元,其中"<<endl;
@@ -632,12 +638,14 @@ void outputBalanceSheet(void)
 	{
 		//取得类型名称
 		string TypeName = InvestmentData.getTypeName(str2int(res.result[i]));
-		if (TypeName == "NULL" || InvestmentData.getSumByType(str2int(res.result[i])) > 0)
+		if (TypeName == "NULL" || InvestmentData.getSumByType(beginTime,
+					endTime, str2int(res.result[i])) >= 0)
 		{
 			continue;
 		}
 		cout<<space;
-		cout<<TypeName<<" = "<<-InvestmentData.getSumByType(str2int(res.result[i]))<<endl;
+		cout<<TypeName<<" = "<<-InvestmentData.getSumByType(beginTime,
+				endTime, str2int(res.result[i]))<<endl;
 	}
 	cout<<line<<endl;
 	cout<<"净资产="<<Total<<endl;
