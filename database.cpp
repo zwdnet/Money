@@ -161,6 +161,33 @@ bool DataBase::createDataBase(void)
 		return false;
 	}
 
+	//创建社保表，只保存到最近日期的个人扣除值总额
+	sql = "CREATE TABLE SocietyInsurance( \
+	       Time DATE, \
+	       Old DECIMAL(7,2),\
+	       Med DECIMAL(7,2),\
+	       Job DECIMAL(7,2),\
+	       House DECIMAL(7,2));";
+	if (sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, NULL) != SQLITE_OK)
+	{
+		errMsg = "插入社保个人缴费表错误!";
+		return false;
+	}
+	success = sqlite3_step(statement);
+	sqlite3_finalize(statement);
+	if (success != SQLITE_DONE)
+	{
+		errMsg = "插入社保个人缴费表错误!";
+		return false;
+	}
+	//初始化的时侯先存入一个空数据，否则程序出错
+	sql = "insert into SocietyInsurance values(19800101, 0.0, 0.0, 0.0, 0.0);";
+	if (!modifyDataBase(sql))
+	{
+		errMsg = "插入社保个人缴费表错误!";
+		return false;
+	}
+
 	closeDataBase();
 	return true;
 }

@@ -16,7 +16,7 @@ int main()
 {
 	DataBase money; //数据库类
 	int input = 0;
-	while (input != 14)
+	while (input != 16)
 	{
 		input = getInput();
 		switch (input)
@@ -52,12 +52,18 @@ int main()
 			searchInvestmentByTime(); //用项目日期检索资产负债记录
 			break;
 		case 11:
-			outputCashFlow();   //输出指定日期范围的现金流量表
+			changeSocietyInsurance();  //增加社保记录
 			break;
 		case 12:
-			outputBalanceSheet(); //输出指定日期范围的资产负债表
+			outputSocientyInsuranceState(); //输出社保状态
 			break;
 		case 13:
+			outputCashFlow();   //输出指定日期范围的现金流量表
+			break;
+		case 14:
+			outputBalanceSheet(); //输出指定日期范围的资产负债表
+			break;
+		case 15:
 			analysisState(); //分析财务状况
 			break;
 		default:

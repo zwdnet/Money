@@ -47,13 +47,15 @@ int getInput(void)
 		    <<"8.删除一个投资/负债记录.........................."<<endl
 	            <<"9.用项目名称检索资产/负债记录...................."<<endl
 		    <<"10.用日期范围检索资产/负债记录..................."<<endl
-		    <<"11.输出指定日期范围的现金流量表.................."<<endl
-		    <<"12.输出指定日期范围的资产负债表.................."<<endl
-		    <<"13.分析指定日期范围内的财务状况.................."<<endl
-		    <<"14.退出.........................................."<<endl;
+		    <<"11.更改一个社保缴费记录.........................."<<endl
+		    <<"12.输出目前的社保状况............................"<<endl
+		    <<"13.输出指定日期范围的现金流量表.................."<<endl
+		    <<"14.输出指定日期范围的资产负债表.................."<<endl
+		    <<"15.分析指定日期范围内的财务状况.................."<<endl
+		    <<"16.退出.........................................."<<endl;
 		cout<<"欢迎使用!请按提示输入选择:";
 		cin>>input;
-		if (input >= 1 && input <= 14)
+		if (input >= 1 && input <= 16)
 		{
 			break;
 		}
@@ -509,6 +511,115 @@ void searchInvestmentByTime(void)
 	sql += " and Time <= ";
 	sql += num2str(endTime);
 	outputResult(sql, 2);
+}
+
+//更改社保个人缴费记录
+void changeSocietyInsurance()
+{
+	DataBase data;
+	data.openDataBase();
+	system("clear");
+	cout<<"增加一项社保个人缴费记录"<<endl;
+	cout<<"输入项目发生时间(格式:YYYYMMDD):";
+	int time;
+	cin>>time;
+	if (!judgeTime(time))
+	{
+		cout<<"输入的时间错误，必须在19800101到20991231之间，且为合法日期，按任意键继续";
+		cin.get();
+		cin.get();
+		return;
+	}
+
+	QueryResult res;
+	float old, med, job, house; //养老、医疗、失业、公积金的当前值
+	string sql = "SELECT * FROM SocietyInsurance;";
+	if (!data.runSQL(sql, res) || (res.row == 0 && res.col == 0))
+	{
+		old = 0.0;
+		med = 0.0;
+		job = 0.0;
+		house = 0.0;
+	}
+	else
+	{
+		old = str2float(res.result[6]);
+		med = str2float(res.result[7]);
+		job = str2float(res.result[8]);
+		house = str2float(res.result[9]);
+	}
+	float newOld, newMed, newJob, newHouse;  //输入的社保缴费值
+	cout<<"输入社保各个项目的变更值：(正值为缴费，负值为消耗，如用医保看病)"
+	    <<endl;
+	cout<<"养老保险:";
+	cin>>newOld;
+	cout<<"医疗保险:";
+	cin>>newMed;
+	cout<<"失业保险:";
+	cin>>newJob;
+	cout<<"住房公积金:";
+	cin>>newHouse;
+	old += newOld;
+	med += newMed;
+	job += newJob;
+	house += newHouse;
+	sql = "UPDATE SocietyInsurance Set Time = ";
+	sql += num2str(time);
+	sql += ", Old = ";
+	sql += num2str(old);
+	sql += ", Med = ";
+	sql += num2str(med);
+	sql += ", Job = ";
+	sql += num2str(job);
+	sql += ", House = ";
+	sql += num2str(house);
+	sql += ";";
+	if (!data.modifyDataBase(sql))
+	{
+		cout<<"修改社保缴费记录失败!"<<endl;
+	}
+	else
+	{
+		cout<<"修改成功！"<<endl;
+	}
+	data.closeDataBase();
+	cout<<"按任意键继续"<<endl;
+	cin.get();
+	cin.get();
+}
+
+//输出当前的社保个人缴费情况
+void outputSocientyInsuranceState()
+{
+	DataBase data;
+	data.openDataBase();
+	system("clear");
+	cout<<"当前您的社保个人缴费总数为:"<<endl;
+	QueryResult res;
+	float old, med, job, house; //养老、医疗、失业、公积金的当前值
+	string sql = "SELECT * FROM SocietyInsurance;";
+	if (!data.runSQL(sql, res) || (res.col == 0 && res.row == 0))
+	{
+		cout<<"没有您的缴费记录"<<endl;
+		cout<<"按任意键继续......"<<endl;
+		cin.get();
+		cin.get();
+		data.closeDataBase();
+		return;
+	}
+	old = str2float(res.result[6]);
+	med = str2float(res.result[7]);
+	job = str2float(res.result[8]);
+	house = str2float(res.result[9]);
+	cout<<"最后缴费时间:"<<res.result[5]<<endl;
+	cout<<"养老保险个人缴费总额:"<<old<<endl;
+	cout<<"医疗保险个人缴费总额:"<<med<<endl;
+	cout<<"失业保险个人缴费总额:"<<job<<endl;
+	cout<<"住房公积金个人缴费总额:"<<house<<endl;
+	cout<<"按任意键继续......"<<endl;
+	cin.get();
+	cin.get();
+	data.closeDataBase();
 }
 
 //输出指定日期范围的现金流量表
