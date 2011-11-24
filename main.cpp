@@ -16,7 +16,7 @@ int main()
 {
 	DataBase money; //数据库类
 	int input = 0;
-	while (input != 16)
+	while (input != 17)
 	{
 		input = getInput();
 		switch (input)
@@ -65,6 +65,9 @@ int main()
 			break;
 		case 15:
 			analysisState(); //分析财务状况
+			break;
+		case 16:
+			outputDatabaseState(); //输出当前数据库存储的记录总数
 			break;
 		default:
 			break;

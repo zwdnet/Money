@@ -52,10 +52,11 @@ int getInput(void)
 		    <<"13.输出指定日期范围的现金流量表.................."<<endl
 		    <<"14.输出指定日期范围的资产负债表.................."<<endl
 		    <<"15.分析指定日期范围内的财务状况.................."<<endl
-		    <<"16.退出.........................................."<<endl;
+		    <<"16.输出当前数据库中存储的记录的总数.............."<<endl
+		    <<"17.退出.........................................."<<endl;
 		cout<<"欢迎使用!请按提示输入选择:";
 		cin>>input;
-		if (input >= 1 && input <= 16)
+		if (input >= 1 && input <= 17)
 		{
 			break;
 		}
@@ -896,6 +897,45 @@ void analysisState(void)
 	}
 	cout<<line<<endl;
 	cout<<"输出完毕，按任意键继续......";
+	cin.get();
+	cin.get();
+}
+
+//输出当前数据库的状态
+void outputDatabaseState(void)
+{
+	system("clear");
+	DataBase database;
+	QueryResult res;
+	string querystr;
+	int incomeNum = 0, investmentNum = 0; //分别记录收入支出项目和投资负债项目记录总数
+	//查询收入支出记录总数
+	querystr = "select count(*) from Income;";
+	if (!database.runSQL(querystr, res))
+	{
+		cout<<"查询数据库失败！"<<endl;
+		return;
+	}
+	else
+	{
+		incomeNum = str2int(res.result[1]);
+	}
+	res.clear();
+	//查询投资负债记录总数
+	querystr = "select count(*) from Investment;";
+	if (!database.runSQL(querystr, res))
+	{
+		cout<<"查询数据库失败！"<<endl;
+		return;
+	}
+	else
+	{
+		investmentNum = str2int(res.result[1]);
+	}
+	cout<<"当前数据库中的记录总数为:"<<endl;
+	cout<<"收入支出记录总数:"<<incomeNum<<"项"<<endl;
+	cout<<"投资负债记录总数:"<<investmentNum<<"项"<<endl;
+	cout<<"查询完毕，按任意键继续......"<<endl;
 	cin.get();
 	cin.get();
 }
