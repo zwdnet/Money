@@ -199,6 +199,7 @@ bool judgeTime(int time)
 //输入收入支出数据
 bool inputIncomeData(Table & data)
 {
+	Income IncomeData;
 	data.ID = NULL;
 	cout<<"输入项目发生时间(格式:YYYYMMDD):";
 	cin>>data.time;
@@ -215,11 +216,38 @@ bool inputIncomeData(Table & data)
 	cout<<"输入项目金额，支出为负，收入为正:";
 	cin>>data.amount;
 	string typeName;
-	cout<<"输入项目分类:";
-	cin>>typeName;
+	//输出现有的所有项目类型，供用户选择
+	string sql = "SELECT TypeID from IncomeType";
+	QueryResult res;
+	DataBase database;
+	database.runSQL(sql, res);
+	int i = 0;
+	for (i = 1; i < res.row+1; i++)
+	{
+		//取得类型名称
+		string TypeName = IncomeData.getTypeName(str2int(res.result[i]));
+		cout<<i<<"."<<TypeName<<endl;
+	}
+	int option; //选择
+	cout<<"请输入项目类型代码，如果要创建新的类型，请输入0:";
+	cin>>option;
+	if (option < 0 || option > res.row+1)
+	{
+		cout<<"输入错误!"<<endl;
+		cin.get();
+		return false;
+	}
+	if (option == 0)
+	{
+		cout<<"输入项目分类:";
+		cin>>typeName;
+	}
+	else
+	{
+		typeName = IncomeData.getTypeName(str2int(res.result[option]));
+	}
 	cout<<"输入项目备注(无请输\"无\"):";
 	cin>>data.remark;
-	Income IncomeData;
 	int typeID = IncomeData.getTypeID(typeName);
 	if (typeID == -1)
 	{
@@ -395,6 +423,7 @@ void searchIncomeByTime(void)
 //输入资产负债数据
 bool inputInvestmentData(Table & data)
 {
+	Investment InvestmentData;
 	data.ID = NULL;
 	cout<<"输入项目发生时间(格式:YYYYMMDD):";
 	cin>>data.time;
@@ -411,11 +440,38 @@ bool inputInvestmentData(Table & data)
 	cout<<"输入项目金额，负债为负，资产为正:";
 	cin>>data.amount;
 	string typeName;
-	cout<<"输入项目分类:";
-	cin>>typeName;
+	//输出现有的所有项目类型，供用户选择
+	string sql = "SELECT TypeID from InvestmentType";
+	QueryResult res;
+	DataBase database;
+	database.runSQL(sql, res);
+	int i = 0;
+	for (i = 1; i < res.row+1; i++)
+	{
+		//取得类型名称
+		string TypeName = InvestmentData.getTypeName(str2int(res.result[i]));
+		cout<<i<<"."<<TypeName<<endl;
+	}
+	int option; //选择
+	cout<<"请输入项目类型代码，如果要创建新的类型，请输入0:";
+	cin>>option;
+	if (option < 0 || option > res.row+1)
+	{
+		cout<<"输入错误!"<<endl;
+		cin.get();
+		return false;
+	}
+	if (option == 0)
+	{
+		cout<<"输入项目分类:";
+		cin>>typeName;
+	}
+	else
+	{
+		typeName = InvestmentData.getTypeName(str2int(res.result[option]));
+	}
 	cout<<"输入项目备注(无请输\"无\"):";
 	cin>>data.remark;
-	Investment InvestmentData;
 	int typeID = InvestmentData.getTypeID(typeName);
 	if (typeID == -1)
 	{
