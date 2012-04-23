@@ -867,6 +867,37 @@ void analysisState(void)
 	{
 		cout<<"您在本时间段内的收入支出出现赤字啦，请增收节支，以改善您的财务状况"<<endl;
 	}
+	//计算用户本时间段的恩格尔系数，资料来自维基百科、百度百科等
+	float SumExpense = IncomeData.getSumExpense(beginTime, endTime); //获取时间段内总支出
+	int foodID = IncomeData.getTypeID("饮食"); //获取食品支出的TypeID
+	float SumFoodExpense = IncomeData.getSumByType(beginTime, endTime, foodID); //获得时间段内的食品支出总数
+	float Engel = SumFoodExpense/SumExpense; //计算恩格尔系数
+	cout<<"您在本时间段内的恩格尔系数为:"<<Engel<<",";
+	//输出恩格尔系数分析结果
+	if (Engel > 0.6)
+	{
+		cout<<"您目前的生活水平处于贫穷状态。"<<endl;
+	}
+	else if (Engel <= 0.6 && Engel > 0.5)
+	{
+		cout<<"您目前的生活水平处于温饱状态。"<<endl;
+	}
+	else if (Engel <= 0.5 && Engel > 0.4)
+	{
+		cout<<"您目前的生活水平处于小康状态。"<<endl;
+	}
+	else if (Engel <= 0.4 && Engel > 0.3)
+	{
+		cout<<"您目前的生活水平处于相对富裕状态。"<<endl;
+	}
+	else if (Engel <= 0.3 && Engel > 0.2)
+	{
+		cout<<"您目前的生活水平处于富裕状态。"<<endl;
+	}
+	else 
+	{
+		cout<<"您目前的生活水平处于极其富裕状态。"<<endl;
+	}
 	cout<<line<<endl;
 	//资产负债分析
 	float TotalInvestment, TotalDebt;
