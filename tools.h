@@ -382,9 +382,9 @@ void searchIncomeByName(void)
 	cout<<"用项目名称检索收入支出记录"<<endl;
 	cout<<"请输入要检索的项目名称:";
 	cin>>name;
-	string sql = "SELECT * FROM Income where Name = \"";
+	string sql = "SELECT * FROM Income where Name like \"%";
 	sql += name;
-	sql += "\";";
+	sql += "%\";";
 	outputResult(sql, 1);
 }
 
@@ -532,9 +532,9 @@ void searchInvestmentByName(void)
 	cout<<"用项目名称检索资产负债记录"<<endl;
 	cout<<"请输入要检索的项目名称:";
 	cin>>name;
-	string sql = "SELECT * FROM Investment where Name = \"";
+	string sql = "SELECT * FROM Investment where Name like \"%";
 	sql += name;
-	sql += "\";";
+	sql += "%\";";
 	outputResult(sql, 2);
 }
 
